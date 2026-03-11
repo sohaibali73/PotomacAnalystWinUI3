@@ -7,9 +7,10 @@ import ApiReference from '@/components/api-reference';
 import Integration from '@/components/integration';
 import Footer from '@/components/footer';
 
+// Server restart trigger
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-zinc-950">
       <Header />
       <Hero />
       <GettingStarted />
