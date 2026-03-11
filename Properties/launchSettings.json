@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "PotomacAnalyst (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "PotomacAnalyst (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

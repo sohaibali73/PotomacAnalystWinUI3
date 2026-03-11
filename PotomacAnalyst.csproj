@@ -1,0 +1,226 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>PotomacAnalyst</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;ARM64</Platforms>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+    <WinUISDKReferences>false</WinUISDKReferences>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- ── Remove from None (required for XAML pages to be picked up) ── -->
+  <ItemGroup>
+    <None Remove="Resources\PotomacTheme.xaml" />
+
+    <!-- Auth pages -->
+    <None Remove="Views\Auth\LoginPage.xaml" />
+    <None Remove="Views\Auth\RegisterPage.xaml" />
+    <None Remove="Views\Auth\ForgotPasswordPage.xaml" />
+
+    <!-- Main pages -->
+    <None Remove="Views\Pages\AflGeneratorPage.xaml" />
+    <None Remove="Views\Pages\AutopilotPage.xaml" />
+    <None Remove="Views\Pages\BacktestPage.xaml" />
+    <None Remove="Views\Pages\ChatPage.xaml" />
+    <None Remove="Views\Pages\ContentPage.xaml" />
+    <None Remove="Views\Pages\DashboardPage.xaml" />
+    <None Remove="Views\Pages\DeckGeneratorPage.xaml" />
+    <None Remove="Views\Pages\DeveloperPage.xaml" />
+    <None Remove="Views\Pages\KnowledgeBasePage.xaml" />
+    <None Remove="Views\Pages\ResearcherPage.xaml" />
+    <None Remove="Views\Pages\ReverseEngineerPage.xaml" />
+    <None Remove="Views\Pages\SettingsPage.xaml" />
+    <None Remove="Views\Pages\SkillsPage.xaml" />
+  </ItemGroup>
+
+  <!-- ── Static assets (icons + fonts) ── -->
+  <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+
+    <!-- Logo files from Potomac Branding Assets -->
+    <Content Include="Assets\potomac-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-icon-black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-icon-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-logo-black.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-logo-white.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\potomac-logo-white-yellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- Brand Fonts: Rajdhani (headings) -->
+    <Content Include="Assets\Fonts\Rajdhani-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Rajdhani-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Rajdhani-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <!-- Brand Fonts: Quicksand (body) -->
+    <Content Include="Assets\Fonts\Quicksand-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Quicksand-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Quicksand-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Fonts\Quicksand-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+
+  <!-- ── NuGet packages ── -->
+  <!--
+    VERSION NOTES (updated 2026-03-08):
+    ─────────────────────────────────────────────────────────────────────────
+    • Microsoft.WindowsAppSDK 1.8.260209005 — current build. The WinAppSDK
+      team ships the umbrella package and sub-packages (winui, foundation,
+      runtime) on different cadences; NuGet resolves consistent minimum
+      versions automatically. If you see STATUS_STOWED_EXCEPTION / COM errors
+      that only appear after the app was updated, downgrade to the last known-
+      good 1.6.x or 1.7.x stable release.
+
+    • Microsoft.Extensions.DependencyInjection — NuGet resolves this to
+      10.0.3 (pulled transitively by WinAppSDK 1.8's ML/AI sub-packages).
+      The explicit version floor here merely documents the minimum we tested.
+      The Extensions packages are backward-compatible; the resolved 10.0.3
+      binary works fine on the .NET 8 runtime.
+
+    • Microsoft.Extensions.Http was REMOVED — the app uses a plain HttpClient
+      singleton, not IHttpClientFactory.  Http was adding Microsoft.Extensions
+      .Logging, .Options, .Diagnostics, etc. as transitive dependencies for
+      zero benefit, and was contributing to the confusing version spread seen
+      in build_output.txt.
+    ─────────────────────────────────────────────────────────────────────────
+  -->
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="CommunityToolkit.WinUI.Animations" Version="8.2.251219" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
+    <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
+    <!-- Resolved to 10.0.3 by WinAppSDK 1.8 transitive deps — that version is fine on .NET 8 -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+    <!-- Microsoft.Extensions.Http REMOVED — unused; was pulling in logging/options/diagnostics for no reason -->
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260209005" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="ViewModels\Auth\" />
+    <Folder Include="ViewModels\Pages\" />
+  </ItemGroup>
+
+  <!-- ── XAML Pages ── -->
+  <ItemGroup>
+    <Page Update="Resources\PotomacTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <!-- Auth pages -->
+  <ItemGroup>
+    <Page Update="Views\Auth\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Auth\RegisterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Auth\ForgotPasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <!-- Main pages -->
+  <ItemGroup>
+    <Page Update="Views\Pages\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\AflGeneratorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\AutopilotPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\BacktestPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\ChatPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\ContentPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\DeckGeneratorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\DeveloperPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\KnowledgeBasePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\ResearcherPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\ReverseEngineerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\SkillsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <!-- ── Publish Properties ── -->
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
+    <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
+    <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
+    <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
+  </PropertyGroup>
+
+</Project>

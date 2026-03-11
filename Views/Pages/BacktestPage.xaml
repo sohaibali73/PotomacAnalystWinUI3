@@ -1,0 +1,157 @@
+<Page
+    x:Class="PotomacAnalyst.Views.Pages.BacktestPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="48,32,48,24"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <StackPanel Spacing="6">
+                <TextBlock Text="BACKTEST ANALYSIS" Style="{StaticResource H2Style}"/>
+                <TextBlock Text="Upload backtest results and get AI-powered performance insights"
+                           Style="{StaticResource BodyStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tab bar -->
+        <Border Grid.Row="1" Padding="48,0"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="TabOverview" Content="OVERVIEW"
+                        Style="{StaticResource TabButtonActiveStyle}" Click="Tab_Click" Tag="0"/>
+                <Button x:Name="TabDetail"   Content="DETAIL"
+                        Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="1"/>
+                <Button x:Name="TabCompare"  Content="COMPARE"
+                        Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="2"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Content — single Grid child inside ScrollViewer -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <Grid>
+
+                <!-- OVERVIEW TAB -->
+                <StackPanel x:Name="OverviewTab" Padding="48,32,48,48" Spacing="32">
+                    <Border Background="{StaticResource CardBackgroundBrush}"
+                            BorderBrush="{StaticResource PotomacYellowBrush}"
+                            BorderThickness="2" CornerRadius="10" Padding="40"
+                            AllowDrop="True" DragOver="DropZone_DragOver" Drop="DropZone_Drop">
+                        <StackPanel HorizontalAlignment="Center" Spacing="12">
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE898;"
+                                      FontSize="36" Foreground="{StaticResource PotomacYellowBrush}"
+                                      HorizontalAlignment="Center"/>
+                            <TextBlock Text="UPLOAD BACKTEST RESULTS"
+                                       Style="{StaticResource H4Style}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Drop your CSV or JSON backtest file here"
+                                       Style="{StaticResource BodyStyle}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Supported: AmiBroker CSV, custom JSON format"
+                                       Style="{StaticResource CaptionStyle}" HorizontalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" Spacing="12"
+                                        HorizontalAlignment="Center" Margin="0,8,0,0">
+                                <Button Content="UPLOAD FILE" Style="{StaticResource PrimaryButtonStyle}"
+                                        Click="UploadFile_Click"/>
+                                <Button Content="USE DEMO DATA" Style="{StaticResource SecondaryButtonStyle}"
+                                        Click="UseDemoData_Click"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel x:Name="MetricsPanel" Visibility="Collapsed" Spacing="24">
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Style="{StaticResource StatCardStyle}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="TOTAL RETURN" Style="{StaticResource LabelStyle}"/>
+                                    <TextBlock x:Name="MetricReturn" Text="--"
+                                               FontFamily="{StaticResource RajdhaniBold}"
+                                               FontSize="28" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1" Style="{StaticResource StatCardStyle}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="SHARPE RATIO" Style="{StaticResource LabelStyle}"/>
+                                    <TextBlock x:Name="MetricSharpe" Text="--"
+                                               FontFamily="{StaticResource RajdhaniBold}"
+                                               FontSize="28" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="2" Style="{StaticResource StatCardStyle}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="MAX DRAWDOWN" Style="{StaticResource LabelStyle}"/>
+                                    <TextBlock x:Name="MetricDrawdown" Text="--"
+                                               FontFamily="{StaticResource RajdhaniBold}"
+                                               FontSize="28" Foreground="{StaticResource PotomacPinkBrush}"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="3" Style="{StaticResource StatCardStyle}">
+                                <StackPanel Spacing="6">
+                                    <TextBlock Text="WIN RATE" Style="{StaticResource LabelStyle}"/>
+                                    <TextBlock x:Name="MetricWinRate" Text="--"
+                                               FontFamily="{StaticResource RajdhaniBold}"
+                                               FontSize="28" Foreground="{StaticResource PotomacTurquoiseBrush}"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="16">
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8D4;"
+                                              FontSize="18" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                    <TextBlock Text="AI INSIGHTS"
+                                               Style="{StaticResource H4Style}" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock x:Name="AiInsightsText"
+                                           Text="Upload a backtest file to receive AI-powered performance analysis."
+                                           Style="{StaticResource BodyStyle}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- DETAIL TAB -->
+                <StackPanel x:Name="DetailTab" Padding="48,32,48,48" Spacing="24"
+                            Visibility="Collapsed">
+                    <TextBlock Text="DETAILED METRICS" Style="{StaticResource H3Style}"/>
+                    <Border Style="{StaticResource CardSmallStyle}" Padding="0">
+                        <StackPanel>
+                            <Border Padding="20,14" Background="#1A1A1A"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                                <Grid>
+                                    <TextBlock Text="METRIC" Style="{StaticResource LabelStyle}"/>
+                                    <TextBlock Text="VALUE" Style="{StaticResource LabelStyle}"
+                                               HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                            <StackPanel x:Name="MetricsTable"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- COMPARE TAB -->
+                <StackPanel x:Name="CompareTab" Padding="48,32,48,48" Spacing="24"
+                            Visibility="Collapsed">
+                    <TextBlock Text="STRATEGY COMPARISON" Style="{StaticResource H3Style}"/>
+                    <TextBlock Text="Upload multiple backtest files to compare strategies side by side."
+                               Style="{StaticResource BodyStyle}"/>
+                    <Button Content="ADD STRATEGY" Style="{StaticResource PrimaryButtonStyle}"
+                            HorizontalAlignment="Left" Click="UploadFile_Click"/>
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

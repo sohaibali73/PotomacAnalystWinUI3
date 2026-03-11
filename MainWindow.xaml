@@ -1,0 +1,232 @@
+<Window
+    x:Class="PotomacAnalyst.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PotomacAnalyst"
+    Title="Analyst by Potomac">
+
+    <Grid x:Name="RootGrid">
+
+        <!-- ══════════════════════════════════════════════════════════════
+             AUTH FRAME  — full-screen, always loaded, hidden after login
+        ══════════════════════════════════════════════════════════════ -->
+        <Frame x:Name="AuthFrame"
+               Background="#0A0A0B"
+               NavigationFailed="AuthFrame_NavigationFailed">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            <SlideNavigationTransitionInfo Effect="FromRight"/>
+                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
+
+        <!-- ══════════════════════════════════════════════════════════════
+             MAIN SHELL  — Visibility="Collapsed" keeps it out of layout
+             and hit-testing during the auth flow. All named children are
+             still initialised by InitializeComponent() so they are safe
+             to access by name in code-behind without FindName().
+             (True zero-cost deferral via x:Load="False" would require
+             FindName() after load and is not used here intentionally.)
+        ══════════════════════════════════════════════════════════════ -->
+        <NavigationView x:Name="NavView"
+                        Visibility="Collapsed"
+                        IsBackButtonVisible="Collapsed"
+                        IsPaneToggleButtonVisible="True"
+                        PaneTitle=""
+                        OpenPaneLength="248"
+                        CompactPaneLength="52"
+                        PaneDisplayMode="Left"
+                        IsTabStop="False"
+                        IsSettingsVisible="False"
+                        SelectionChanged="NavView_SelectionChanged"
+                        Background="Transparent">
+
+            <!-- ── Logo ── -->
+            <NavigationView.PaneHeader>
+                <Image Source="ms-appx:///Assets/potomac-logo-white-yellow.png"
+                       Height="26"
+                       Stretch="Uniform"
+                       HorizontalAlignment="Left"
+                       Margin="16,14,12,14"/>
+            </NavigationView.PaneHeader>
+
+            <!-- ══════════════════════════════════════════════
+                 NAV ITEMS — all icons use Segoe Fluent Icons
+                 (MDL2 Assets is legacy — never use it here)
+            ══════════════════════════════════════════════ -->
+            <NavigationView.MenuItems>
+
+                <NavigationViewItemHeader Content="WORKSPACE"/>
+
+                <NavigationViewItem Tag="Dashboard" Content="Dashboard">
+                    <NavigationViewItem.Icon>
+                        <!-- Home -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE80F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="AflGenerator" Content="AFL Generator">
+                    <NavigationViewItem.Icon>
+                        <!-- Code / script -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF158;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Chat" Content="Chat">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8BD;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Researcher" Content="Researcher">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE721;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItemSeparator/>
+
+                <NavigationViewItemHeader Content="TOOLS"/>
+
+                <NavigationViewItem Tag="Backtest" Content="Backtest">
+                    <NavigationViewItem.Icon>
+                        <!-- Chart / analytics -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE9F5;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="ReverseEngineer" Content="Reverse Engineer">
+                    <NavigationViewItem.Icon>
+                        <!-- Repair / dissect -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE90F;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Content" Content="Content Studio">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="DeckGenerator" Content="Deck Generator">
+                    <NavigationViewItem.Icon>
+                        <!-- Presentation / slides -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7C9;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItemSeparator/>
+
+                <NavigationViewItemHeader Content="INTELLIGENCE"/>
+
+                <NavigationViewItem Tag="KnowledgeBase" Content="Knowledge Base">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE82D;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Autopilot" Content="Autopilot">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE768;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem Tag="Skills" Content="AI Skills">
+                    <NavigationViewItem.Icon>
+                        <!-- Brain / intelligence -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xEA80;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+            </NavigationView.MenuItems>
+
+            <!-- ── Footer nav ── -->
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Tag="Developer" Content="Developer">
+                    <NavigationViewItem.Icon>
+                        <!-- Terminal / dev tools -->
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE756;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem Tag="Settings" Content="Settings">
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE713;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
+            <!-- ── User card in pane footer ── -->
+            <NavigationView.PaneFooter>
+                <Border Padding="12,12,12,8"
+                        BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}"
+                        BorderThickness="0,1,0,0">
+                    <StackPanel Spacing="10">
+
+                        <StackPanel x:Name="UserInfoPanel"
+                                    Orientation="Horizontal"
+                                    Spacing="10">
+                            <Border Width="36" Height="36" CornerRadius="18"
+                                    Background="#FEC00F">
+                                <TextBlock x:Name="UserInitialsText"
+                                           Text="U"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontFamily="{StaticResource RajdhaniBold}"
+                                           FontSize="14"
+                                           Foreground="#212121"/>
+                            </Border>
+                            <StackPanel x:Name="UserDetailsPanel"
+                                        VerticalAlignment="Center"
+                                        Spacing="1">
+                                <TextBlock x:Name="UserNameText"
+                                           Text="USER"
+                                           FontFamily="{StaticResource RajdhaniBold}"
+                                           FontSize="12"
+                                           Foreground="{ThemeResource TextFillColorPrimaryBrush}"/>
+                                <TextBlock x:Name="UserEmailText"
+                                           Text="user@potomac.com"
+                                           FontFamily="{StaticResource QuicksandRegular}"
+                                           FontSize="10"
+                                           Foreground="{ThemeResource TextFillColorTertiaryBrush}"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <Button x:Name="LogoutBtn"
+                                HorizontalAlignment="Stretch"
+                                Style="{StaticResource DangerButtonStyle}"
+                                Content="SIGN OUT"
+                                Click="LogoutBtn_Click"/>
+
+                    </StackPanel>
+                </Border>
+            </NavigationView.PaneFooter>
+
+            <!-- ══════════════════════════════════════════════
+                 CONTENT FRAME
+                 IsNavigationStackEnabled="False" — selection
+                 is managed via NavView; no back-stack needed.
+                 NavigationThemeTransition gives fluid slide-in
+                 on every page switch with zero extra code.
+            ══════════════════════════════════════════════ -->
+            <Frame x:Name="ContentFrame"
+                   IsNavigationStackEnabled="False"
+                   NavigationFailed="ContentFrame_NavigationFailed">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <SlideNavigationTransitionInfo Effect="FromRight"/>
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+
+        </NavigationView>
+
+    </Grid>
+</Window>

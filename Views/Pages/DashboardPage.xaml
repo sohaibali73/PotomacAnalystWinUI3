@@ -1,0 +1,253 @@
+<Page
+    x:Class="PotomacAnalyst.Views.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:models="using:PotomacAnalyst.Models"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Padding="40,36,40,48" Spacing="32">
+
+            <!-- ── Hero ── -->
+            <StackPanel Spacing="6">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock Text="WELCOME BACK,"
+                               FontFamily="{StaticResource RajdhaniBold}"
+                               FontSize="30" FontWeight="Bold" CharacterSpacing="60"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               TextWrapping="NoWrap"/>
+                    <TextBlock x:Name="WelcomeName" Text="USER"
+                               FontFamily="{StaticResource RajdhaniBold}"
+                               FontSize="30" FontWeight="Bold" CharacterSpacing="60"
+                               Foreground="{StaticResource PotomacYellowBrush}"
+                               TextWrapping="NoWrap"/>
+                </StackPanel>
+                <TextBlock Text="Your AI-powered trading strategy and analytics platform"
+                           Style="{StaticResource BodyStyle}"/>
+
+                <!-- Quick-action strip -->
+                <StackPanel Orientation="Horizontal" Spacing="8" Margin="0,10,0,0">
+                    <Button Content="AFL GENERATOR" Style="{StaticResource PrimaryButtonStyle}"
+                            Padding="18,10" Click="StartGenerating_Click"/>
+                    <Button Content="NEW CHAT" Style="{StaticResource SecondaryButtonStyle}"
+                            Padding="16,10" Click="NavToChat_Click"/>
+                    <Button Content="RESEARCHER" Style="{StaticResource SecondaryButtonStyle}"
+                            Padding="16,10" Click="NavToResearcher_Click"/>
+                    <Button Content="BACKTEST" Style="{StaticResource SecondaryButtonStyle}"
+                            Padding="16,10" Click="NavToBacktest_Click"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- ── Stats Row ── -->
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource StatCardStyle}">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="STRATEGIES" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock x:Name="StatStrategies" Text="—"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="38" FontWeight="Bold"
+                                   Foreground="{StaticResource PotomacYellowBrush}"/>
+                        <TextBlock Text="Generated" Style="{StaticResource CaptionStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1" Style="{StaticResource StatCardStyle}">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="CONVERSATIONS" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock x:Name="StatConversations" Text="—"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="38" FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Total Chats" Style="{StaticResource CaptionStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource StatCardStyle}">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="DOCUMENTS" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock x:Name="StatDocuments" Text="—"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="38" FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Knowledge Base" Style="{StaticResource CaptionStyle}"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="3" Style="{StaticResource StatCardStyle}">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="BACKTESTS" Style="{StaticResource LabelStyle}"/>
+                        <TextBlock x:Name="StatBacktests" Text="—"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="38" FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}"/>
+                        <TextBlock Text="Analyses Run" Style="{StaticResource CaptionStyle}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- ── Two-column: Recent Conversations + Quick Tools ── -->
+            <Grid ColumnSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="280"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Recent Conversations -->
+                <StackPanel Grid.Column="0" Spacing="14">
+                    <Grid>
+                        <TextBlock Text="RECENT CONVERSATIONS" Style="{StaticResource H4Style}"/>
+                        <Button Content="VIEW ALL"
+                                Style="{StaticResource GhostYellowButtonStyle}"
+                                HorizontalAlignment="Right" VerticalAlignment="Center"
+                                Click="ViewAllChats_Click"/>
+                    </Grid>
+
+                    <Border Style="{StaticResource CardSmallStyle}" Padding="0" CornerRadius="10">
+                        <StackPanel>
+
+                            <!-- Empty state — collapsed once conversations load -->
+                            <Border x:Name="EmptyConversationsState"
+                                    Padding="18,14"
+                                    BorderBrush="{StaticResource BorderBrush}"
+                                    BorderThickness="0,0,0,1">
+                                <StackPanel Orientation="Horizontal" Spacing="12">
+                                    <Border Width="6" Height="6" CornerRadius="3"
+                                            Background="{StaticResource TextMutedBrush}"
+                                            VerticalAlignment="Center"/>
+                                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                                        <TextBlock Text="No conversations yet"
+                                                   FontFamily="{StaticResource QuicksandMedium}"
+                                                   FontSize="13"
+                                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                                        <TextBlock Text="Start chatting to see history here"
+                                                   Style="{StaticResource CaptionStyle}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- x:Bind DataTemplate — compiled, zero-reflection, fastest possible -->
+                            <ItemsRepeater x:Name="RecentConversationsList">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Orientation="Vertical"/>
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ApiConversation">
+                                        <Border Padding="18,14"
+                                                BorderBrush="{StaticResource BorderBrush}"
+                                                BorderThickness="0,0,0,1">
+                                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                                <Border Width="6" Height="6" CornerRadius="3"
+                                                        Background="{StaticResource TextMutedBrush}"
+                                                        VerticalAlignment="Center"/>
+                                                <TextBlock Text="{x:Bind Title}"
+                                                           FontFamily="{StaticResource QuicksandMedium}"
+                                                           FontSize="13"
+                                                           Foreground="{StaticResource TextSecondaryBrush}"
+                                                           TextWrapping="NoWrap"
+                                                           VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+
+                            <!-- New Conversation CTA — always in XAML, never built in code -->
+                            <Button Padding="18,12" BorderThickness="0"
+                                    Background="Transparent"
+                                    HorizontalAlignment="Stretch"
+                                    HorizontalContentAlignment="Left"
+                                    Click="NavToChat_Click">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE710;"
+                                              FontSize="12"
+                                              Foreground="{StaticResource PotomacYellowBrush}"/>
+                                    <TextBlock Text="START NEW CONVERSATION"
+                                               FontFamily="{StaticResource RajdhaniBold}"
+                                               FontSize="11" CharacterSpacing="40"
+                                               Foreground="{StaticResource PotomacYellowBrush}"
+                                               VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Quick Tools -->
+                <StackPanel Grid.Column="1" Spacing="14">
+                    <TextBlock Text="QUICK TOOLS" Style="{StaticResource H4Style}"/>
+
+                    <StackPanel Spacing="6">
+                        <Button Style="{StaticResource QuickToolButtonStyle}" Click="NavToAfl_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE943;"
+                                          FontSize="14"
+                                          Foreground="{StaticResource PotomacYellowBrush}"/>
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="AFL GENERATOR" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Generate strategy code" Style="{StaticResource CaptionStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource QuickToolButtonStyle}" Click="NavToResearcher_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE721;"
+                                          FontSize="14"
+                                          Foreground="{StaticResource PotomacTurquoiseBrush}"/>
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="RESEARCHER" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Company research" Style="{StaticResource CaptionStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource QuickToolButtonStyle}" Click="NavToBacktest_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE9F5;"
+                                          FontSize="14"
+                                          Foreground="{StaticResource PotomacGreenBrush}"/>
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="BACKTEST" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Analyze performance" Style="{StaticResource CaptionStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource QuickToolButtonStyle}" Click="NavToDeck_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7C9;"
+                                          FontSize="14"
+                                          Foreground="{StaticResource PotomacOrangeBrush}"/>
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="DECK GENERATOR" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Create presentations" Style="{StaticResource CaptionStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <Button Style="{StaticResource QuickToolButtonStyle}" Click="NavToKnowledge_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE82D;"
+                                          FontSize="14"
+                                          Foreground="{StaticResource PotomacPurpleBrush}"/>
+                                <StackPanel Spacing="1">
+                                    <TextBlock Text="KNOWLEDGE BASE" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Research library" Style="{StaticResource CaptionStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

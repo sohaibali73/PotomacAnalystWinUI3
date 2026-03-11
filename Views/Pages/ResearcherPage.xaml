@@ -1,0 +1,292 @@
+<Page
+    x:Class="PotomacAnalyst.Views.Pages.ResearcherPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Padding="48,32,48,24"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <StackPanel Spacing="6">
+                <TextBlock Text="RESEARCHER" Style="{StaticResource H2Style}"/>
+                <TextBlock Text="Company research, peer comparison, and strategy analysis"
+                           Style="{StaticResource BodyStyle}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Sub-navigation -->
+        <Border Grid.Row="1" Padding="48,0"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="TabQuickSearch"  Content="QUICK SEARCH"
+                        Style="{StaticResource TabButtonActiveStyle}"
+                        Click="Tab_Click" Tag="0"/>
+                <Button x:Name="TabCompany"      Content="COMPANY RESEARCH"
+                        Style="{StaticResource TabButtonStyle}"
+                        Click="Tab_Click" Tag="1"/>
+                <Button x:Name="TabPeer"         Content="PEER COMPARISON"
+                        Style="{StaticResource TabButtonStyle}"
+                        Click="Tab_Click" Tag="2"/>
+                <Button x:Name="TabStrategy"     Content="STRATEGY ANALYSIS"
+                        Style="{StaticResource TabButtonStyle}"
+                        Click="Tab_Click" Tag="3"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tab content -->
+        <Grid Grid.Row="2">
+
+            <!-- QUICK SEARCH -->
+            <ScrollViewer x:Name="QuickSearchTab" VerticalScrollBarVisibility="Auto">
+                <StackPanel Padding="48,40,48,48" Spacing="32">
+
+                    <!-- Hero search -->
+                    <StackPanel HorizontalAlignment="Center" MaxWidth="600" Spacing="20">
+                        <StackPanel Spacing="8" HorizontalAlignment="Center">
+                            <TextBlock Text="RESEARCH ANYTHING"
+                                       Style="{StaticResource H2Style}"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="Search companies, strategies, market data, and financial news"
+                                       Style="{StaticResource BodyStyle}"
+                                       HorizontalAlignment="Center"
+                                       TextAlignment="Center"/>
+                        </StackPanel>
+
+                        <Border Background="{StaticResource CardBackgroundBrush}"
+                                BorderBrush="{StaticResource BorderBrush}"
+                                BorderThickness="1" CornerRadius="12"
+                                Padding="6">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="QuickSearchBox"
+                                         Grid.Column="0"
+                                         FontFamily="{StaticResource QuicksandRegular}"
+                                         FontSize="16"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Foreground="{StaticResource TextPrimaryBrush}"
+                                         PlaceholderText="Search by ticker, company name, strategy..."
+                                         Padding="14,12"
+                                         KeyDown="QuickSearch_KeyDown"/>
+                                <Button Grid.Column="1"
+                                        Content="SEARCH"
+                                        Style="{StaticResource PrimaryButtonStyle}"
+                                        Padding="20,12"
+                                        Click="QuickSearch_Click"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Quick chips -->
+                        <StackPanel Orientation="Horizontal" Spacing="8"
+                                    HorizontalAlignment="Center">
+                            <TextBlock Text="Popular:" Style="{StaticResource CaptionStyle}"
+                                       VerticalAlignment="Center"/>
+                            <Button Content="SPY" Style="{StaticResource SecondaryButtonStyle}"
+                                    Padding="10,5" FontSize="11" Click="QuickChip_Click" Tag="SPY"/>
+                            <Button Content="AAPL" Style="{StaticResource SecondaryButtonStyle}"
+                                    Padding="10,5" FontSize="11" Click="QuickChip_Click" Tag="AAPL"/>
+                            <Button Content="NVDA" Style="{StaticResource SecondaryButtonStyle}"
+                                    Padding="10,5" FontSize="11" Click="QuickChip_Click" Tag="NVDA"/>
+                            <Button Content="TSLA" Style="{StaticResource SecondaryButtonStyle}"
+                                    Padding="10,5" FontSize="11" Click="QuickChip_Click" Tag="TSLA"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Recent research cards -->
+                    <StackPanel Spacing="16">
+                        <TextBlock Text="RESEARCH TOOLS" Style="{StaticResource H3Style}"/>
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" Style="{StaticResource CardSmallStyle}">
+                                <StackPanel Spacing="10">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE736;"
+                                              FontSize="28" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                    <TextBlock Text="COMPANY RESEARCH" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Deep dive into company fundamentals, financials, and competitive position."
+                                               Style="{StaticResource BodyStyle}" FontSize="13"/>
+                                    <Button Content="RESEARCH COMPANY"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="12,6" FontSize="12" HorizontalAlignment="Left"
+                                            Click="GoToCompany_Click"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource CardSmallStyle}">
+                                <StackPanel Spacing="10">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE9F5;"
+                                              FontSize="28" Foreground="{StaticResource PotomacTurquoiseBrush}"/>
+                                    <TextBlock Text="PEER COMPARISON" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Compare companies across key financial and performance metrics."
+                                               Style="{StaticResource BodyStyle}" FontSize="13"/>
+                                    <Button Content="COMPARE PEERS"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="12,6" FontSize="12" HorizontalAlignment="Left"
+                                            Click="GoToPeer_Click"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="2" Style="{StaticResource CardSmallStyle}">
+                                <StackPanel Spacing="10">
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE943;"
+                                              FontSize="28" Foreground="#9C27B0"/>
+                                    <TextBlock Text="STRATEGY ANALYSIS" Style="{StaticResource H5Style}"/>
+                                    <TextBlock Text="Analyze investment strategies with AI-powered insights and risk metrics."
+                                               Style="{StaticResource BodyStyle}" FontSize="13"/>
+                                    <Button Content="ANALYZE STRATEGY"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Padding="12,6" FontSize="12" HorizontalAlignment="Left"
+                                            Click="GoToStrategy_Click"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- COMPANY RESEARCH -->
+            <ScrollViewer x:Name="CompanyTab" VerticalScrollBarVisibility="Auto"
+                          Visibility="Collapsed">
+                <StackPanel Padding="48,32,48,48" Spacing="24">
+                    <TextBlock Text="COMPANY RESEARCH" Style="{StaticResource H3Style}"/>
+
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel Spacing="20">
+                            <StackPanel Spacing="8">
+                                <TextBlock Text="TICKER SYMBOL OR COMPANY NAME"
+                                           Style="{StaticResource LabelStyle}"/>
+                                <Grid ColumnSpacing="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox x:Name="CompanySearchBox"
+                                             Style="{StaticResource InputStyle}"
+                                             PlaceholderText="e.g., AAPL, Apple Inc, SPY..."/>
+                                    <Button Grid.Column="1" Content="RESEARCH"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Click="CompanyResearch_Click"/>
+                                </Grid>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Spacing="12">
+                                <CheckBox x:Name="IncludeFundamentals" Content="Fundamentals"
+                                          FontFamily="{StaticResource QuicksandRegular}"
+                                          Foreground="{StaticResource TextPrimaryBrush}"
+                                          IsChecked="True"/>
+                                <CheckBox x:Name="IncludeNews" Content="News"
+                                          FontFamily="{StaticResource QuicksandRegular}"
+                                          Foreground="{StaticResource TextPrimaryBrush}"
+                                          IsChecked="True"/>
+                                <CheckBox x:Name="IncludeFilings" Content="SEC Filings"
+                                          FontFamily="{StaticResource QuicksandRegular}"
+                                          Foreground="{StaticResource TextPrimaryBrush}"
+                                          IsChecked="False"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Results area -->
+                    <Border x:Name="CompanyResults"
+                            Style="{StaticResource CardStyle}"
+                            Visibility="Collapsed">
+                        <TextBlock x:Name="CompanyResultsText"
+                                   Style="{StaticResource BodyStyle}"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- PEER COMPARISON -->
+            <ScrollViewer x:Name="PeerTab" VerticalScrollBarVisibility="Auto"
+                          Visibility="Collapsed">
+                <StackPanel Padding="48,32,48,48" Spacing="24">
+                    <TextBlock Text="PEER COMPARISON" Style="{StaticResource H3Style}"/>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="COMPANIES TO COMPARE" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="PeerTickers"
+                                     Style="{StaticResource InputStyle}"
+                                     PlaceholderText="Enter tickers separated by commas: AAPL, MSFT, GOOGL, AMZN"/>
+                            <Button Content="COMPARE"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    HorizontalAlignment="Left"
+                                    Click="PeerCompare_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Peer comparison results -->
+                    <Border x:Name="PeerResultBorder"
+                            Style="{StaticResource CardStyle}"
+                            Visibility="Collapsed">
+                        <StackPanel Spacing="12">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE9F5;"
+                                          FontSize="16" Foreground="{StaticResource PotomacTurquoiseBrush}"/>
+                                <TextBlock Text="PEER ANALYSIS"
+                                           Style="{StaticResource H5Style}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock x:Name="PeerResultText"
+                                       Style="{StaticResource BodyStyle}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- STRATEGY ANALYSIS -->
+            <ScrollViewer x:Name="StrategyTab" VerticalScrollBarVisibility="Auto"
+                          Visibility="Collapsed">
+                <StackPanel Padding="48,32,48,48" Spacing="24">
+                    <TextBlock Text="STRATEGY ANALYSIS" Style="{StaticResource H3Style}"/>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel Spacing="16">
+                            <TextBlock Text="STRATEGY DESCRIPTION" Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="StrategyInput"
+                                     Style="{StaticResource MultilineInputStyle}"
+                                     PlaceholderText="Describe the investment strategy you want analyzed..."
+                                     Height="100"/>
+                            <Button Content="ANALYZE"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    HorizontalAlignment="Left"
+                                    Click="StrategyAnalyze_Click"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Strategy analysis results -->
+                    <Border x:Name="StrategyResultBorder"
+                            Style="{StaticResource CardStyle}"
+                            Visibility="Collapsed">
+                        <StackPanel Spacing="12">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8D4;"
+                                          FontSize="16" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                <TextBlock Text="STRATEGY INSIGHTS"
+                                           Style="{StaticResource H5Style}"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock x:Name="StrategyResultText"
+                                       Style="{StaticResource BodyStyle}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</Page>

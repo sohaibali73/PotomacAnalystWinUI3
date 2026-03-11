@@ -1,0 +1,427 @@
+<Page
+    x:Class="PotomacAnalyst.Views.Pages.ContentPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- ── Compact Tab Bar ── -->
+        <Grid Grid.Row="0" Background="{StaticResource SidebarBackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border Height="1" VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                    Background="{StaticResource BorderBrush}"/>
+
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Padding="16,0">
+                <Button x:Name="TabChat"       Content="WRITE"      Style="{StaticResource TabButtonActiveStyle}" Click="Tab_Click" Tag="0"/>
+                <Button x:Name="TabSlides"     Content="SLIDES"     Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="1"/>
+                <Button x:Name="TabArticles"   Content="ARTICLES"   Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="2"/>
+                <Button x:Name="TabDocuments"  Content="DOCUMENTS"  Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="3"/>
+                <Button x:Name="TabDashboards" Content="DASHBOARDS" Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="4"/>
+                <Button x:Name="TabSkills"     Content="AI SKILLS"  Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="5"/>
+                <Button x:Name="TabAnalytics"  Content="ANALYTICS"  Style="{StaticResource TabButtonStyle}"       Click="Tab_Click" Tag="6"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8"
+                        Padding="16,8,16,8" VerticalAlignment="Center">
+                <Border Background="{StaticResource InputBackgroundBrush}"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1" CornerRadius="8" Width="220">
+                    <Grid>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE721;"
+                                  FontSize="12" Foreground="{StaticResource TextMutedBrush}"
+                                  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox FontFamily="{StaticResource QuicksandRegular}" FontSize="12"
+                                 Background="Transparent" BorderThickness="0"
+                                 Foreground="{StaticResource TextPrimaryBrush}"
+                                 PlaceholderText="Search content..."
+                                 Padding="30,8,10,8"/>
+                    </Grid>
+                </Border>
+                <Button Content="NEW" Style="{StaticResource PrimaryButtonStyle}" Padding="16,8" FontSize="12"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ── Tab Content ── -->
+        <Grid Grid.Row="1">
+
+            <!-- WRITE TAB -->
+            <Grid x:Name="ChatTab">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left AI Assistant panel -->
+                <Grid Grid.Column="0" Background="{StaticResource SidebarBackgroundBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Border Width="1" HorizontalAlignment="Right" Grid.RowSpan="3"
+                            Background="{StaticResource BorderBrush}"/>
+
+                    <StackPanel Grid.Row="0" Padding="18,16,18,12" Spacing="12">
+                        <TextBlock Text="AI ASSISTANT"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="11" CharacterSpacing="60"
+                                   Foreground="{StaticResource TextMutedBrush}"/>
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="TONE"
+                                       FontFamily="{StaticResource QuicksandMedium}"
+                                       FontSize="10" CharacterSpacing="40"
+                                       Foreground="{StaticResource TextMutedBrush}"/>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border Background="{StaticResource PotomacYellowBrush}"
+                                        CornerRadius="12" Padding="10,4">
+                                    <TextBlock Text="Professional"
+                                               FontFamily="{StaticResource QuicksandMedium}"
+                                               FontSize="11" Foreground="{StaticResource PotomacDarkGrayBrush}"/>
+                                </Border>
+                                <Border Background="{StaticResource CardBackgroundBrush}"
+                                        BorderBrush="{StaticResource BorderBrush}"
+                                        BorderThickness="1" CornerRadius="12" Padding="10,4">
+                                    <TextBlock Text="Concise"
+                                               FontFamily="{StaticResource QuicksandRegular}"
+                                               FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                </Border>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <Border Background="{StaticResource CardBackgroundBrush}"
+                                        BorderBrush="{StaticResource BorderBrush}"
+                                        BorderThickness="1" CornerRadius="12" Padding="10,4">
+                                    <TextBlock Text="Analytical"
+                                               FontFamily="{StaticResource QuicksandRegular}"
+                                               FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                </Border>
+                                <Border Background="{StaticResource CardBackgroundBrush}"
+                                        BorderBrush="{StaticResource BorderBrush}"
+                                        BorderThickness="1" CornerRadius="12" Padding="10,4">
+                                    <TextBlock Text="Detailed"
+                                               FontFamily="{StaticResource QuicksandRegular}"
+                                               FontSize="11" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                        <Border Style="{StaticResource DividerStyle}"/>
+                    </StackPanel>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Padding="18,0,18,0">
+                        <StackPanel Spacing="16">
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="TEMPLATES"
+                                           FontFamily="{StaticResource QuicksandMedium}"
+                                           FontSize="10" CharacterSpacing="40"
+                                           Foreground="{StaticResource TextMutedBrush}"/>
+                                <StackPanel Spacing="2">
+                                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                            Background="Transparent" BorderThickness="0" CornerRadius="8" Padding="10,8">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"
+                                                      FontSize="12" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                            <TextBlock Text="Market Commentary" FontFamily="{StaticResource QuicksandRegular}"
+                                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                            Background="Transparent" BorderThickness="0" CornerRadius="8" Padding="10,8">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"
+                                                      FontSize="12" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                            <TextBlock Text="Strategy Overview" FontFamily="{StaticResource QuicksandRegular}"
+                                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                            Background="Transparent" BorderThickness="0" CornerRadius="8" Padding="10,8">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"
+                                                      FontSize="12" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                            <TextBlock Text="Research Report" FontFamily="{StaticResource QuicksandRegular}"
+                                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                            Background="Transparent" BorderThickness="0" CornerRadius="8" Padding="10,8">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"
+                                                      FontSize="12" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                            <TextBlock Text="Client Newsletter" FontFamily="{StaticResource QuicksandRegular}"
+                                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                            Background="Transparent" BorderThickness="0" CornerRadius="8" Padding="10,8">
+                                        <StackPanel Orientation="Horizontal" Spacing="10">
+                                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;"
+                                                      FontSize="12" Foreground="{StaticResource PotomacYellowBrush}"/>
+                                            <TextBlock Text="Investment Thesis" FontFamily="{StaticResource QuicksandRegular}"
+                                                       FontSize="12" Foreground="{StaticResource TextSecondaryBrush}"
+                                                       VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                            <Border Style="{StaticResource DividerStyle}"/>
+                            <StackPanel Spacing="6">
+                                <TextBlock Text="RECENT" FontFamily="{StaticResource QuicksandMedium}"
+                                           FontSize="10" CharacterSpacing="40" Foreground="{StaticResource TextMutedBrush}"/>
+                                <TextBlock Text="No recent documents" FontFamily="{StaticResource QuicksandRegular}"
+                                           FontSize="12" Foreground="{StaticResource TextMutedBrush}" Margin="10,4,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="2" Padding="18,12"
+                            BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
+                        <Button Content="GENERATE WITH AI" Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Stretch" FontSize="12" Padding="0,10"
+                                Click="GenerateContent_Click"/>
+                    </Border>
+                </Grid>
+
+                <!-- Right: Writing Editor -->
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Padding="64,40,64,32" Spacing="16" MaxWidth="780"
+                                    HorizontalAlignment="Center">
+                            <TextBox x:Name="DocumentTitle"
+                                     FontFamily="{StaticResource RajdhaniBold}"
+                                     FontSize="28" FontWeight="Bold"
+                                     Background="Transparent" BorderThickness="0"
+                                     Foreground="{StaticResource TextPrimaryBrush}"
+                                     PlaceholderText="UNTITLED DOCUMENT"
+                                     Padding="0" TextWrapping="Wrap"/>
+                            <Border Height="1" Background="{StaticResource BorderBrush}" Opacity="0.4"/>
+                            <TextBox x:Name="ContentEditor"
+                                     FontFamily="{StaticResource QuicksandRegular}" FontSize="15"
+                                     Background="Transparent" BorderThickness="0"
+                                     Foreground="{StaticResource TextPrimaryBrush}"
+                                     PlaceholderText="Start writing, or ask AI to help you craft the perfect piece..."
+                                     AcceptsReturn="True" TextWrapping="Wrap"
+                                     Padding="0" MinHeight="400"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <Border Grid.Row="1" Background="{StaticResource CardBackgroundBrush}"
+                            BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0" Padding="24,12">
+                        <Grid ColumnSpacing="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="{StaticResource InputBackgroundBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="10">
+                                <Grid>
+                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8D4;"
+                                              FontSize="13" Foreground="{StaticResource PotomacYellowBrush}"
+                                              HorizontalAlignment="Left" Margin="14,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBox FontFamily="{StaticResource QuicksandRegular}" FontSize="13"
+                                             Background="Transparent" BorderThickness="0"
+                                             Foreground="{StaticResource TextPrimaryBrush}"
+                                             PlaceholderText="Ask AI to improve, expand, rewrite, or translate..."
+                                             Padding="38,10,14,10"/>
+                                </Grid>
+                            </Border>
+                            <Button Grid.Column="1" Content="GENERATE" Style="{StaticResource PrimaryButtonStyle}"
+                                    Padding="18,10" FontSize="12" Click="GenerateContent_Click"/>
+                            <Button Grid.Column="2" Style="{StaticResource IconButtonStyle}" Width="40" Height="40">
+                                <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE74E;"
+                                          FontSize="14" Foreground="{StaticResource TextSecondaryBrush}"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <!-- SLIDES TAB -->
+            <Grid x:Name="SlidesTab" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Padding="48,32,48,28"
+                        Background="{StaticResource CardBackgroundBrush}"
+                        BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                    <Grid>
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="PRESENTATION SLIDES" Style="{StaticResource H2Style}"/>
+                            <TextBlock Text="Create professional branded presentations with AI in seconds"
+                                       Style="{StaticResource BodyStyle}"/>
+                        </StackPanel>
+                        <Button Content="CREATE NEW DECK" Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Right" Padding="20,12" Click="CreateSlideDeck_Click"/>
+                    </Grid>
+                </Border>
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Padding="48,28,48,48" Spacing="24">
+                        <TextBlock Text="TEMPLATES" Style="{StaticResource LabelStyle}"/>
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" CornerRadius="12" Background="{StaticResource CardBackgroundBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                                <StackPanel>
+                                    <Border Height="120" CornerRadius="12,12,0,0" Background="#1A1A00">
+                                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7C9;" FontSize="32"
+                                                  Foreground="{StaticResource PotomacYellowBrush}"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Padding="16,14" Spacing="4">
+                                        <TextBlock Text="STRATEGY OVERVIEW" FontFamily="{StaticResource RajdhaniBold}"
+                                                   FontSize="12" CharacterSpacing="30" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        <TextBlock Text="One-pager strategy deck" Style="{StaticResource CaptionStyle}"/>
+                                        <Button Content="USE TEMPLATE" FontFamily="{StaticResource RajdhaniBold}"
+                                                FontSize="10" CharacterSpacing="30"
+                                                Background="{StaticResource PotomacYellowBrush}"
+                                                Foreground="{StaticResource PotomacDarkGrayBrush}"
+                                                Padding="0,6" CornerRadius="6" HorizontalAlignment="Stretch"
+                                                BorderThickness="0" Margin="0,6,0,0" Click="CreateSlideDeck_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="1" CornerRadius="12" Background="{StaticResource CardBackgroundBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                                <StackPanel>
+                                    <Border Height="120" CornerRadius="12,12,0,0" Background="#001A2A">
+                                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7C9;" FontSize="32"
+                                                  Foreground="{StaticResource PotomacTurquoiseBrush}"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Padding="16,14" Spacing="4">
+                                        <TextBlock Text="MARKET ANALYSIS" FontFamily="{StaticResource RajdhaniBold}"
+                                                   FontSize="12" CharacterSpacing="30" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        <TextBlock Text="Market overview deck" Style="{StaticResource CaptionStyle}"/>
+                                        <Button Content="USE TEMPLATE" FontFamily="{StaticResource RajdhaniBold}"
+                                                FontSize="10" CharacterSpacing="30"
+                                                Background="{StaticResource PotomacYellowBrush}"
+                                                Foreground="{StaticResource PotomacDarkGrayBrush}"
+                                                Padding="0,6" CornerRadius="6" HorizontalAlignment="Stretch"
+                                                BorderThickness="0" Margin="0,6,0,0" Click="CreateSlideDeck_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Grid.Column="2" CornerRadius="12" Background="{StaticResource CardBackgroundBrush}"
+                                    BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+                                <StackPanel>
+                                    <Border Height="120" CornerRadius="12,12,0,0" Background="#1A0A00">
+                                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE7C9;" FontSize="32"
+                                                  Foreground="#FF9800"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <StackPanel Padding="16,14" Spacing="4">
+                                        <TextBlock Text="CLIENT REPORT" FontFamily="{StaticResource RajdhaniBold}"
+                                                   FontSize="12" CharacterSpacing="30" Foreground="{StaticResource TextPrimaryBrush}"/>
+                                        <TextBlock Text="Professional client deck" Style="{StaticResource CaptionStyle}"/>
+                                        <Button Content="USE TEMPLATE" FontFamily="{StaticResource RajdhaniBold}"
+                                                FontSize="10" CharacterSpacing="30"
+                                                Background="{StaticResource PotomacYellowBrush}"
+                                                Foreground="{StaticResource PotomacDarkGrayBrush}"
+                                                Padding="0,6" CornerRadius="6" HorizontalAlignment="Stretch"
+                                                BorderThickness="0" Margin="0,6,0,0" Click="CreateSlideDeck_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- ARTICLES TAB -->
+            <ScrollViewer x:Name="ArticlesTab" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                <StackPanel Padding="48,28,48,48" Spacing="24">
+                    <Grid>
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="ARTICLES" Style="{StaticResource H2Style}"/>
+                            <TextBlock Text="AI-generated financial articles and research pieces" Style="{StaticResource BodyStyle}"/>
+                        </StackPanel>
+                        <Button Content="NEW ARTICLE" Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Right" Padding="18,10" FontSize="12"/>
+                    </Grid>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel HorizontalAlignment="Center" Spacing="12" Padding="0,24">
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;" FontSize="36"
+                                      Foreground="{StaticResource TextDisabledBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="NO ARTICLES YET" FontFamily="{StaticResource RajdhaniBold}"
+                                       FontSize="14" CharacterSpacing="40"
+                                       Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Create your first AI-generated article to get started"
+                                       Style="{StaticResource BodyStyle}" HorizontalAlignment="Center" TextAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- DOCUMENTS TAB -->
+            <ScrollViewer x:Name="DocumentsTab2" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                <StackPanel Padding="48,28,48,48" Spacing="24">
+                    <Grid>
+                        <StackPanel Spacing="4">
+                            <TextBlock Text="DOCUMENTS" Style="{StaticResource H2Style}"/>
+                            <TextBlock Text="Research documents and reports" Style="{StaticResource BodyStyle}"/>
+                        </StackPanel>
+                        <Button Content="NEW DOCUMENT" Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Right" Padding="18,10" FontSize="12"/>
+                    </Grid>
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel HorizontalAlignment="Center" Spacing="12" Padding="0,24">
+                            <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8A5;" FontSize="36"
+                                      Foreground="{StaticResource TextDisabledBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="NO DOCUMENTS YET" FontFamily="{StaticResource RajdhaniBold}"
+                                       FontSize="14" CharacterSpacing="40"
+                                       Foreground="{StaticResource TextMutedBrush}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="Create your first document to get started"
+                                       Style="{StaticResource BodyStyle}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- DASHBOARDS TAB -->
+            <ScrollViewer x:Name="DashboardsTab" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                <StackPanel Padding="48,28,48,48" Spacing="24">
+                    <TextBlock Text="CUSTOM DASHBOARDS" Style="{StaticResource H2Style}"/>
+                    <TextBlock Text="Build custom analytics dashboards for your strategies." Style="{StaticResource BodyStyle}"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- AI SKILLS TAB -->
+            <ScrollViewer x:Name="SkillsTab2" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                <StackPanel Padding="48,28,48,48" Spacing="24">
+                    <TextBlock Text="AI SKILLS" Style="{StaticResource H2Style}"/>
+                    <TextBlock Text="Configure specialized AI capabilities for content creation." Style="{StaticResource BodyStyle}"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- ANALYTICS TAB -->
+            <ScrollViewer x:Name="AnalyticsTab" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                <StackPanel Padding="48,28,48,48" Spacing="24">
+                    <TextBlock Text="CONTENT ANALYTICS" Style="{StaticResource H2Style}"/>
+                    <TextBlock Text="Track the performance and reach of your content." Style="{StaticResource BodyStyle}"/>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,157 @@
+<Page
+    x:Class="PotomacAnalyst.Views.Auth.RegisterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{StaticResource AppBackgroundBrush}">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid MinHeight="700">
+            <StackPanel Width="420"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="0"
+                        Padding="0,48,0,48">
+
+                <!-- Logo -->
+                <StackPanel HorizontalAlignment="Center" Spacing="8" Margin="0,0,0,32">
+                    <Border Width="56" Height="56"
+                            CornerRadius="12"
+                            Background="{StaticResource PotomacYellowBrush}"
+                            HorizontalAlignment="Center">
+                        <TextBlock Text="P"
+                                   FontFamily="{StaticResource RajdhaniBold}"
+                                   FontSize="28" FontWeight="Bold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{StaticResource PotomacDarkGrayBrush}"/>
+                    </Border>
+                    <TextBlock Text="POTOMAC ANALYST"
+                               FontFamily="{StaticResource RajdhaniBold}"
+                               FontSize="22" FontWeight="Bold"
+                               CharacterSpacing="80"
+                               HorizontalAlignment="Center"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+                </StackPanel>
+
+                <!-- Card -->
+                <Border Style="{StaticResource CardStyle}">
+                    <StackPanel Spacing="22">
+
+                        <!-- Header -->
+                        <StackPanel Spacing="6">
+                            <TextBlock Text="CREATE ACCOUNT"
+                                       Style="{StaticResource H2Style}"/>
+                            <TextBlock Text="Join the Potomac Analyst Workbench"
+                                       Style="{StaticResource BodyStyle}"/>
+                        </StackPanel>
+
+                        <!-- Error banner -->
+                        <Border x:Name="ErrorBanner"
+                                Background="#2D1515"
+                                BorderBrush="{StaticResource PotomacPinkBrush}"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="14,10"
+                                Visibility="Collapsed">
+                            <TextBlock x:Name="ErrorText"
+                                       FontFamily="{StaticResource QuicksandRegular}"
+                                       FontSize="13"
+                                       Foreground="{StaticResource PotomacPinkBrush}"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- Success banner -->
+                        <Border x:Name="SuccessBanner"
+                                Background="#0D2D0D"
+                                BorderBrush="{StaticResource PotomacTurquoiseBrush}"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Padding="14,10"
+                                Visibility="Collapsed">
+                            <TextBlock x:Name="SuccessText"
+                                       FontFamily="{StaticResource QuicksandRegular}"
+                                       FontSize="13"
+                                       Foreground="{StaticResource PotomacTurquoiseBrush}"
+                                       TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- Full name -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="FULL NAME"
+                                       Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="FullNameBox"
+                                     Style="{StaticResource InputStyle}"
+                                     PlaceholderText="John Smith"/>
+                        </StackPanel>
+
+                        <!-- Email -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="EMAIL ADDRESS"
+                                       Style="{StaticResource LabelStyle}"/>
+                            <TextBox x:Name="EmailBox"
+                                     Style="{StaticResource InputStyle}"
+                                     PlaceholderText="you@example.com"
+                                     InputScope="EmailSmtpAddress"/>
+                        </StackPanel>
+
+                        <!-- Password -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="PASSWORD"
+                                       Style="{StaticResource LabelStyle}"/>
+                            <PasswordBox x:Name="PasswordBox"
+                                         Style="{StaticResource PasswordInputStyle}"
+                                         PlaceholderText="Minimum 8 characters"/>
+                        </StackPanel>
+
+                        <!-- Confirm password -->
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="CONFIRM PASSWORD"
+                                       Style="{StaticResource LabelStyle}"/>
+                            <PasswordBox x:Name="ConfirmPasswordBox"
+                                         Style="{StaticResource PasswordInputStyle}"
+                                         PlaceholderText="Re-enter your password"/>
+                        </StackPanel>
+
+                        <!-- Register button -->
+                        <Button x:Name="RegisterBtn"
+                                Content="CREATE ACCOUNT"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                HorizontalAlignment="Stretch"
+                                Click="RegisterBtn_Click"/>
+
+                        <!-- Progress -->
+                        <ProgressBar x:Name="LoadingBar"
+                                     IsIndeterminate="True"
+                                     Visibility="Collapsed"
+                                     Foreground="{StaticResource PotomacYellowBrush}"
+                                     Background="{StaticResource BorderBrush}"
+                                     Height="3"/>
+
+                        <!-- Divider -->
+                        <Border Style="{StaticResource DividerStyle}"/>
+
+                        <!-- Back to login -->
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    Spacing="6">
+                            <TextBlock Text="Already have an account?"
+                                       Style="{StaticResource BodyStyle}"
+                                       VerticalAlignment="Center"/>
+                            <Button x:Name="BackToLoginBtn"
+                                    Content="Sign in"
+                                    FontFamily="{StaticResource QuicksandMedium}"
+                                    FontSize="14"
+                                    Foreground="{StaticResource PotomacYellowBrush}"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Padding="0"
+                                    Click="BackToLoginBtn_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>
