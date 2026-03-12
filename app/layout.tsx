@@ -1,13 +1,16 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
+const inter = Inter({ 
+  subsets: ['latin'], 
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
-  title: 'PotomacAnalyst | API Documentation',
-  description: 'Comprehensive API and integration documentation for PotomacAnalyst - the advanced financial analysis toolkit',
+  title: 'PotomacAnalyst | Documentation',
+  description: 'The advanced financial analysis toolkit for modern analysts',
 };
 
 export const viewport: Viewport = {
@@ -22,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="bg-zinc-950" suppressHydrationWarning>
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans bg-zinc-950 text-zinc-100`}>
+    <html lang="en" className="bg-white" suppressHydrationWarning>
+      <body className={`${inter.variable} font-sans bg-white text-[#1d1d1f] antialiased`}>
         {children}
       </body>
     </html>

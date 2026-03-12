@@ -1,6 +1,5 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 const endpoints = [
@@ -13,91 +12,101 @@ const endpoints = [
     ],
   },
   {
-    category: 'Analysis & Backtest',
+    category: 'Analysis',
     items: [
-      { method: 'POST', path: '/api/backtest/run', description: 'Run a backtest on a strategy with historical data' },
-      { method: 'GET', path: '/api/backtest/results/:id', description: 'Get backtest results and performance metrics' },
-      { method: 'POST', path: '/api/afl/validate', description: 'Validate AFL code syntax and structure' },
+      { method: 'POST', path: '/api/backtest/run', description: 'Run a backtest on a strategy' },
+      { method: 'GET', path: '/api/backtest/results/:id', description: 'Get backtest results and metrics' },
+      { method: 'POST', path: '/api/afl/validate', description: 'Validate AFL code syntax' },
     ],
   },
   {
-    category: 'Data & Research',
+    category: 'Data',
     items: [
-      { method: 'GET', path: '/api/market/quotes/:symbol', description: 'Get current market data for a symbol' },
-      { method: 'GET', path: '/api/research/content/:id', description: 'Retrieve knowledge base content by ID' },
-      { method: 'POST', path: '/api/research/search', description: 'Search across knowledge base and external sources' },
+      { method: 'GET', path: '/api/market/quotes/:symbol', description: 'Get current market data' },
+      { method: 'GET', path: '/api/research/content/:id', description: 'Retrieve knowledge base content' },
+      { method: 'POST', path: '/api/research/search', description: 'Search across knowledge base' },
     ],
   },
   {
-    category: 'Skills & Extensions',
+    category: 'Skills',
     items: [
-      { method: 'GET', path: '/api/skills/list', description: 'List all available skills and custom extensions' },
-      { method: 'POST', path: '/api/skills/create', description: 'Create a new custom skill or tool' },
-      { method: 'POST', path: '/api/skills/:id/execute', description: 'Execute a specific skill with parameters' },
+      { method: 'GET', path: '/api/skills/list', description: 'List all available skills' },
+      { method: 'POST', path: '/api/skills/create', description: 'Create a new custom skill' },
+      { method: 'POST', path: '/api/skills/:id/execute', description: 'Execute a specific skill' },
     ],
   },
 ];
 
-const MethodBadge = ({ method }: { method: string }) => {
-  const colors: Record<string, string> = {
-    GET: 'bg-blue-500/20 text-blue-400',
-    POST: 'bg-green-500/20 text-green-400',
-    PUT: 'bg-yellow-500/20 text-yellow-400',
-    DELETE: 'bg-red-500/20 text-red-400',
-  };
-  const color = colors[method] || colors.GET;
-  return <span className={`px-2 py-1 rounded text-xs font-mono font-semibold ${color}`}>{method}</span>;
+const methodStyles: Record<string, string> = {
+  GET: 'bg-[#34c759]/10 text-[#248a3d]',
+  POST: 'bg-[#0071e3]/10 text-[#0071e3]',
+  PUT: 'bg-[#ff9f0a]/10 text-[#c93400]',
+  DELETE: 'bg-[#ff3b30]/10 text-[#ff3b30]',
 };
 
-function CategorySection({ category, items }: { category: string; items: typeof endpoints[0]['items'] }) {
-  const [isOpen, setIsOpen] = useState(true);
+export default function ApiReference() {
+  const [openCategory, setOpenCategory] = useState<string | null>('Authentication');
 
   return (
-    <div className="mb-4">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 bg-zinc-800 hover:bg-zinc-700 rounded-lg border border-zinc-700 transition-colors text-left min-h-[44px]"
-      >
-        <h4 className="font-semibold text-zinc-100">{category}</h4>
-        <ChevronDown size={20} className={`text-zinc-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
+    <section id="api" className="py-20 md:py-28">
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-[32px] md:text-[48px] font-semibold text-[#1d1d1f] leading-[1.08] tracking-[-0.003em] mb-4">
+            API Reference.
+          </h2>
+          <p className="text-[19px] md:text-[21px] text-[#86868b] max-w-[600px] mx-auto">
+            RESTful endpoints for integrating with PotomacAnalyst services.
+          </p>
+        </div>
 
-      {isOpen && (
-        <div className="mt-3 space-y-3">
-          {items.map((item, idx) => (
-            <div key={idx} className="ml-4 p-4 bg-zinc-950 rounded-lg border border-zinc-800">
-              <div className="flex items-center gap-3 mb-2">
-                <MethodBadge method={item.method} />
-                <code className="text-xs sm:text-sm font-mono text-zinc-400 flex-1 overflow-x-auto">{item.path}</code>
-              </div>
-              <p className="text-sm text-zinc-400">{item.description}</p>
+        <div className="space-y-3 mb-12">
+          {endpoints.map((section) => (
+            <div key={section.category} className="border border-[#d2d2d7]/60 rounded-2xl overflow-hidden">
+              <button
+                onClick={() => setOpenCategory(openCategory === section.category ? null : section.category)}
+                className="w-full flex items-center justify-between p-5 bg-white hover:bg-[#f5f5f7] transition-colors text-left min-h-[56px]"
+              >
+                <span className="text-[17px] font-semibold text-[#1d1d1f]">{section.category}</span>
+                <svg 
+                  className={`w-5 h-5 text-[#86868b] transition-transform duration-200 ${openCategory === section.category ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {openCategory === section.category && (
+                <div className="border-t border-[#d2d2d7]/60 bg-[#f5f5f7]/50">
+                  {section.items.map((item, idx) => (
+                    <div 
+                      key={idx} 
+                      className="p-5 border-b border-[#d2d2d7]/40 last:border-b-0"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className={`px-2.5 py-1 rounded-md text-[12px] font-semibold font-mono ${methodStyles[item.method]}`}>
+                          {item.method}
+                        </span>
+                        <code className="text-[14px] font-mono text-[#1d1d1f]">{item.path}</code>
+                      </div>
+                      <p className="text-[14px] text-[#86868b] ml-[70px]">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
-      )}
-    </div>
-  );
-}
 
-export default function ApiReference() {
-  return (
-    <section id="api-reference" className="py-20 md:py-32 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold text-zinc-100 mb-4">API Reference</h2>
-          <p className="text-xl text-zinc-400">RESTful API endpoints for integrating with PotomacAnalyst services.</p>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          {endpoints.map((section) => (
-            <CategorySection key={section.category} category={section.category} items={section.items} />
-          ))}
-
-          <div className="mt-8 p-6 bg-yellow-400/10 border border-yellow-400/30 rounded-lg">
-            <h4 className="font-semibold text-zinc-100 mb-3">Authentication</h4>
-            <p className="text-zinc-400 text-sm mb-4">All API requests require authentication. Include your API key in the Authorization header:</p>
-            <code className="block bg-zinc-950 rounded-lg p-4 text-sm font-mono text-amber-100 overflow-x-auto">Authorization: Bearer YOUR_API_KEY</code>
-          </div>
+        <div className="bg-[#1d1d1f] rounded-2xl p-6 md:p-8">
+          <h4 className="text-[17px] font-semibold text-white mb-4">Authentication</h4>
+          <p className="text-[14px] text-[#86868b] mb-4">
+            All API requests require authentication. Include your API key in the Authorization header:
+          </p>
+          <code className="block bg-[#2d2d2d] rounded-xl p-4 text-[14px] font-mono text-[#f5f5f7]">
+            Authorization: Bearer YOUR_API_KEY
+          </code>
         </div>
       </div>
     </section>

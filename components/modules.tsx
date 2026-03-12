@@ -1,51 +1,45 @@
-'use client';
-
-import { BarChart3, MessageSquare, Book, TrendingUp, Code, Sparkles, Zap, Users, Settings, Layers, Search, Cpu } from 'lucide-react';
-
 const modules = [
-  { icon: BarChart3, name: 'Dashboard', description: 'Central hub with real-time analytics, performance metrics, and customizable widgets for instant insights.' },
-  { icon: Code, name: 'AFL Generator', description: 'Advanced Formula Language code generation with drag-and-drop interface, syntax highlighting, and version control.' },
-  { icon: MessageSquare, name: 'Chat', description: 'AI-powered conversational interface with natural language processing, context awareness, and file analysis.' },
-  { icon: Book, name: 'Knowledge Base', description: 'Organized repository for research materials, documentation, and collaborative knowledge management.' },
-  { icon: TrendingUp, name: 'Backtest', description: 'Historical data testing and strategy validation with comprehensive performance metrics and risk assessment.' },
-  { icon: Sparkles, name: 'Reverse Engineer', description: 'Code analysis and deconstruction tools for understanding, documenting, and optimizing systems.' },
-  { icon: Users, name: 'Content', description: 'Document management with rich text editing, templates, version control, and collaborative features.' },
-  { icon: Zap, name: 'Deck Generator', description: 'Professional presentation and report generation with data integration and design customization.' },
-  { icon: Cpu, name: 'Autopilot', description: 'Automated analysis workflows and batch processing with scheduling and error handling.' },
-  { icon: Layers, name: 'Skills', description: 'Custom tool and skill management system for extending functionality and building reusable components.' },
-  { icon: Search, name: 'Researcher', description: 'Advanced research capabilities with database integration, API support, and automated data gathering.' },
-  { icon: Settings, name: 'Developer', description: 'Development tools, debugging utilities, and API testing for custom module development.' },
+  { name: 'Dashboard', description: 'Central hub with real-time analytics and customizable widgets.' },
+  { name: 'AFL Generator', description: 'Advanced Formula Language code generation with syntax highlighting.' },
+  { name: 'Chat', description: 'AI-powered conversational interface with natural language processing.' },
+  { name: 'Knowledge Base', description: 'Organized repository for research materials and documentation.' },
+  { name: 'Backtest', description: 'Historical data testing and strategy validation with performance metrics.' },
+  { name: 'Reverse Engineer', description: 'Code analysis and deconstruction tools for understanding systems.' },
+  { name: 'Content', description: 'Document management with rich text editing and version control.' },
+  { name: 'Deck Generator', description: 'Professional presentation and report generation tools.' },
+  { name: 'Autopilot', description: 'Automated analysis workflows and batch processing.' },
+  { name: 'Skills', description: 'Custom tool and skill management system for extending functionality.' },
+  { name: 'Researcher', description: 'Advanced research capabilities with database integration.' },
+  { name: 'Developer', description: 'Development tools, debugging utilities, and API testing.' },
 ];
 
 export default function Modules() {
   return (
-    <section id="modules" className="py-20 md:py-32 bg-zinc-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-4xl font-bold text-zinc-100 mb-4">Core Modules</h2>
-          <p className="text-xl text-zinc-400">Thirteen powerful modules designed to cover every aspect of financial analysis and research.</p>
+    <section id="modules" className="py-20 md:py-28">
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-[32px] md:text-[48px] font-semibold text-[#1d1d1f] leading-[1.08] tracking-[-0.003em] mb-4">
+            Powerful modules.
+          </h2>
+          <p className="text-[19px] md:text-[21px] text-[#86868b] max-w-[600px] mx-auto">
+            Twelve integrated modules designed for every aspect of financial analysis.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {modules.map((module) => {
-            const IconComponent = module.icon;
-            return (
-              <div
-                key={module.name}
-                className="bg-zinc-900 rounded-lg border border-zinc-800 p-6 group hover:border-yellow-400/50 hover:bg-zinc-800/50 transition-all duration-300"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-zinc-800 rounded-lg group-hover:bg-yellow-400/20 transition-colors">
-                    <IconComponent size={24} className="text-yellow-400" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-zinc-100 mb-2">{module.name}</h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed">{module.description}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {modules.map((module) => (
+            <div
+              key={module.name}
+              className="group p-6 bg-white rounded-2xl border border-[#d2d2d7]/60 hover:border-[#d2d2d7] hover:shadow-lg transition-all duration-300"
+            >
+              <h3 className="text-[19px] font-semibold text-[#1d1d1f] mb-2 group-hover:text-[#0071e3] transition-colors">
+                {module.name}
+              </h3>
+              <p className="text-[14px] text-[#86868b] leading-[1.43]">
+                {module.description}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
